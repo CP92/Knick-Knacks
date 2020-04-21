@@ -1,0 +1,14 @@
+{
+    "variants": 
+    {	
+    	"normal": { "model": "knickknacks:salting_barrel"},
+        "burning=false,facing=north": { "model": "knickknacks:salting_barrel" },
+        "burning=false,facing=east": { "model": "knickknacks:salting_barrel", "y": 90 },
+        "burning=false,facing=south": { "model": "knickknacks:salting_barrel", "y": 180 },
+        "burning=false,facing=west": { "model": "knickknacks:salting_barrel", "y": 270 },
+        "burning=true,facing=north": { "model": "knickknacks:salting_barrel" },
+        "burning=true,facing=east": { "model": "knickknacks:salting_barrel", "y": 90 },
+        "burning=true,facing=south": { "model": "knickknacks:salting_barrel", "y": 180 },
+        "burning=true,facing=west": { "model": "knickknacks:salting_barrel", "y":270  }
+    }
+}

@@ -1,0 +1,25 @@
+{
+	"type": "minecraft:crafting_shaped",
+	
+	"pattern": 
+	[
+		"WWW",
+		"III",
+		"WWW"
+	],
+	"key": 
+	{
+		"W": {
+			"item": "minecraft:log",
+      		"data": 0
+		},
+		
+		"I": {
+			"item": "minecraft:iron_ingot"
+		}	
+	},
+	"result": 
+	{
+		"item": "knickknacks:salting_barrel"
+	}
+}

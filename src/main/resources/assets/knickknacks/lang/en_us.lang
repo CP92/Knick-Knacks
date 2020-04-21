@@ -1,0 +1,11 @@
+// Items
+item.salt_pile.name=Salt Pile
+item.pestle_and_mortar.name=Pestle and Mortar
+
+//Blocks
+tile.salting_barrel.name=Salting Barrel
+tile.salty_sand.name=Salty Sand
+tile.salt_block.name=Salt Block
+
+//Containers
+container.salting_barrel=Salting Barrel 

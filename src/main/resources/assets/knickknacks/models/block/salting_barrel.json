@@ -1,0 +1,13 @@
+
+{
+    "parent": "block/orientable",
+    "textures": {
+        "particle": "knickknacks:blocks/salting_barrel",
+        "up": "knickknacks:blocks/salting_barrel_top",
+        "down": "knickknacks:blocks/salting_barrel_top",
+        "north": "knickknacks:blocks/salting_barrel",
+        "east": "knickknacks:blocks/salting_barrel",
+        "south": "knickknacks:blocks/salting_barrel",
+        "west": "knickknacks:blocks/salting_barrel"
+    }
+}

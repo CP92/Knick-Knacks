@@ -1,0 +1,25 @@
+{
+	"type": "minecraft:crafting_shaped",
+	
+	"pattern": 
+	[
+		"  S",
+		"CSC",
+		" C "
+	],
+	"key": 
+	{
+		"C": {
+			"item": "minecraft:cobblestone"
+		},
+		
+		"S": {
+     		"item": "minecraft:stone",
+      		"data": 0
+		}	
+	},
+	"result": 
+	{
+		"item": "knickknacks:pestle_and_mortar"
+	}
+}

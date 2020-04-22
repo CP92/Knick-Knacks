@@ -65,6 +65,8 @@ public class TileEntitySaltingBarrel extends TileEntity implements ITickable
 		return this.hasCustomName() ? new TextComponentString(this.customName) : new TextComponentTranslation("container.salting_barrel");
 	}
 	
+	
+	
 	@Override
 	public void readFromNBT(NBTTagCompound compound)
 	{
@@ -91,7 +93,7 @@ public class TileEntitySaltingBarrel extends TileEntity implements ITickable
 		return compound;
 	}
 	
-	public boolean isBurning() 
+	public boolean isSalting() 
 	{
 		return this.saltTime > 0;
 	}
@@ -104,7 +106,7 @@ public class TileEntitySaltingBarrel extends TileEntity implements ITickable
 	
 	public void update() 
 	{	
-		if(this.isBurning())
+		if(this.isSalting())
 		{
 			--this.saltTime;
 			BlockSaltingBarrel.setState(true, world, pos);
@@ -113,14 +115,14 @@ public class TileEntitySaltingBarrel extends TileEntity implements ITickable
 		ItemStack[] inputs = new ItemStack[] {handler.getStackInSlot(0)};
 		ItemStack fuel = this.handler.getStackInSlot(1);
 		
-		if(this.isBurning() || !fuel.isEmpty() && !this.handler.getStackInSlot(0).isEmpty())
+		if(this.isSalting() || !fuel.isEmpty() && !this.handler.getStackInSlot(0).isEmpty())
 		{
-			if(!this.isBurning() && this.canSmelt())
+			if(!this.isSalting() && this.canSmelt())
 			{
 				this.saltTime = getItemsaltTime(fuel);
 				this.currentSaltTime = saltTime;
 				
-				if(this.isBurning() && !fuel.isEmpty())
+				if(this.isSalting() && !fuel.isEmpty())
 				{
 					Item item = fuel.getItem();
 					fuel.shrink(1);
@@ -134,7 +136,7 @@ public class TileEntitySaltingBarrel extends TileEntity implements ITickable
 			}
 		}
 		
-		if(this.isBurning() && this.canSmelt() && dryTime > 0)
+		if(this.isSalting() && this.canSmelt() && dryTime > 0)
 		{
 			dryTime++;
 			if(dryTime == totalDryTime)
@@ -155,7 +157,7 @@ public class TileEntitySaltingBarrel extends TileEntity implements ITickable
 		}
 		else
 		{
-			if(this.canSmelt() && this.isBurning())
+			if(this.canSmelt() && this.isSalting())
 			{
 				ItemStack output = SaltingBarrelRecipes.getInstance().getSaltingResult(inputs[0]);
 				if(!output.isEmpty())
@@ -166,6 +168,10 @@ public class TileEntitySaltingBarrel extends TileEntity implements ITickable
 					handler.setStackInSlot(0, inputs[0]);
 				}
 			}
+		}
+		
+		if(this.isSalting()) {
+			this.markDirty();
 		}
 	}
 	

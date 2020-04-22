@@ -6,6 +6,7 @@ import knickknacks.KnickKnacks;
 import knickknacks.init.BlockInit;
 import knickknacks.objects.blocks.BlockBase;
 import knickknacks.objects.blocks.functionals.tileentities.TileEntitySaltingBarrel;
+import knickknacks.particles.SaltingBarrelParticles;
 import knickknacks.utils.Reference;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.SoundType;
@@ -15,19 +16,25 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockSaltingBarrel extends BlockBase {
 
@@ -51,6 +58,42 @@ public class BlockSaltingBarrel extends BlockBase {
 	{
 		return new ItemStack(BlockInit.SALTING_BARREL);
 	}
+	
+	@SideOnly(Side.CLIENT)
+    @SuppressWarnings("incomplete-switch")
+    public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand)
+    {
+		TileEntitySaltingBarrel barrelEntity = (TileEntitySaltingBarrel) worldIn.getTileEntity(pos);
+        if (barrelEntity.isSalting())
+        {
+            EnumFacing enumfacing = (EnumFacing)stateIn.getValue(FACING);
+            double d0 = (double)pos.getX() + 0.5D;
+            double d1 = (double)pos.getY() + rand.nextDouble() * 6.0D / 16.0D;
+            double d2 = (double)pos.getZ() + 0.5D;
+            double d3 = 0.52D;
+            double d4 = rand.nextDouble() * 0.6D - 0.3D;
+
+            if (rand.nextDouble() < 0.1D)
+            {
+                worldIn.playSound((double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
+            }
+
+            switch (enumfacing)
+            {
+                case WEST:
+                    this.spawnParticles(worldIn, pos);
+                    break;
+                case EAST:
+                	this.spawnParticles(worldIn, pos);
+                    break;
+                case NORTH:
+                	this.spawnParticles(worldIn, pos);
+                    break;
+                case SOUTH:
+                	this.spawnParticles(worldIn, pos);
+            }
+        }
+    }
 	
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) 
@@ -95,6 +138,33 @@ public class BlockSaltingBarrel extends BlockBase {
 			tileentity.validate();
 			worldIn.setTileEntity(pos, tileentity);
 		}
+	}
+	
+	private void spawnParticles(World worldIn, BlockPos pos)
+	{
+
+		int y = pos.getY() + 1;
+		
+		for (int i = 0; i < 4; i++) {
+			int x = pos.getX();
+			int z = pos.getZ();
+			switch(i) {
+				case 1:
+					x++;
+					break;
+				case 2:
+					z++;
+					break;
+				case 3:
+					x++;
+					z++;
+					break;
+			
+			}
+			Minecraft.getMinecraft().effectRenderer.addEffect(SaltingBarrelParticles.CreateParticle(worldIn, x, y, z, 1f, 0, 0, 1));
+		}
+			
+		
 	}
 	
 	@Override
@@ -158,5 +228,7 @@ public class BlockSaltingBarrel extends BlockBase {
 	{
 		return ((EnumFacing)state.getValue(FACING)).getIndex();
 	}
+	
+	
 
 }

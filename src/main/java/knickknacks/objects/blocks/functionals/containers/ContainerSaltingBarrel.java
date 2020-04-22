@@ -49,7 +49,6 @@ public class ContainerSaltingBarrel extends Container {
     /**
      * Looks for changes made in the container, sends them to every listener.
      */
-    @Override
     public void detectAndSendChanges()
     {
         super.detectAndSendChanges();
@@ -85,7 +84,6 @@ public class ContainerSaltingBarrel extends Container {
         this.totalCookTime = this.tileBarrel.getField(3);
     }
 
-    @Override
     @SideOnly(Side.CLIENT)
     public void updateProgressBar(int id, int data)
     {
@@ -95,7 +93,6 @@ public class ContainerSaltingBarrel extends Container {
     /**
      * Determines whether supplied player can use this container
      */
-    @Override
     public boolean canInteractWith(EntityPlayer playerIn)
     {
         return this.tileBarrel.isUsableByPlayer(playerIn);
@@ -105,7 +102,6 @@ public class ContainerSaltingBarrel extends Container {
      * Handle when the stack in slot {@code index} is shift-clicked. Normally this moves the stack between the player
      * inventory and the other inventory(s).
      */
-    @Override
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
     {
         ItemStack itemstack = ItemStack.EMPTY;

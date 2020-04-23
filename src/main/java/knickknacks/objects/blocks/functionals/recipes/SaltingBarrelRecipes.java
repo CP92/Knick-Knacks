@@ -3,11 +3,10 @@ package knickknacks.objects.blocks.functionals.recipes;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Table;
 
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class SaltingBarrelRecipes {	
@@ -22,13 +21,17 @@ public class SaltingBarrelRecipes {
 	
 	private SaltingBarrelRecipes() 
 	{
-		addSaltingRecipe(new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.LEATHER), 5.0F);
+		this.addSalting(Items.ROTTEN_FLESH, new ItemStack(Items.LEATHER, 1), 5.0F);
+	}
+	
+	public void addSalting(Item input, ItemStack stack, float experience) {
+		this.addSaltingRecipe(new ItemStack(input, 1, 32767), stack, experience);
 	}
 
 	
 	public void addSaltingRecipe(ItemStack input1, ItemStack result, float experience) 
 	{
-		if(getSaltingResult(input1) != ItemStack.EMPTY) return;
+		if(getSaltingResult(input1) != ItemStack.EMPTY) { net.minecraftforge.fml.common.FMLLog.log.info("Ignored smelting recipe with conflicting input: {} = {}", input1, result); return; }
 		this.smeltingList.put(input1, result);
 		this.experienceList.put(result, Float.valueOf(experience));
 	}
@@ -39,7 +42,13 @@ public class SaltingBarrelRecipes {
 		{
 			if(this.compareItemStacks(input1, (ItemStack)entry.getKey())) 
 			{
-				return (ItemStack)entry.getValue();	
+				ItemStack resultingItem = entry.getValue();
+				
+				if (resultingItem.isEmpty()) {
+					resultingItem.grow(1);
+				}
+				
+				return resultingItem;	
 			}
 		}
 		return ItemStack.EMPTY;

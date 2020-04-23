@@ -117,8 +117,10 @@ public class TileEntitySaltingBarrel extends TileEntity implements ITickable
 		
 		if(this.isSalting() || !fuel.isEmpty() && !this.handler.getStackInSlot(0).isEmpty())
 		{
+
 			if(!this.isSalting() && this.canSmelt())
 			{
+
 				this.saltTime = getItemsaltTime(fuel);
 				this.currentSaltTime = saltTime;
 				

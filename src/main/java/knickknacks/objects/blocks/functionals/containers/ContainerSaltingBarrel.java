@@ -1,5 +1,6 @@
 package knickknacks.objects.blocks.functionals.containers;
 
+import knickknacks.objects.blocks.functionals.recipes.SaltingBarrelRecipes;
 import knickknacks.objects.blocks.functionals.tileentities.TileEntitySaltingBarrel;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -7,7 +8,6 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -123,14 +123,14 @@ public class ContainerSaltingBarrel extends Container {
             }
             else if (index != 1 && index != 0)
             {
-                if (!FurnaceRecipes.instance().getSmeltingResult(itemstack1).isEmpty())
+                if (!SaltingBarrelRecipes.getInstance().getSaltingResult(itemstack1).isEmpty())
                 {
                     if (!this.mergeItemStack(itemstack1, 0, 1, false))
                     {
                         return ItemStack.EMPTY;
                     }
                 }
-                else if (TileEntityFurnace.isItemFuel(itemstack1))
+                else if (TileEntitySaltingBarrel.isItemFuel(itemstack1))
                 {
                     if (!this.mergeItemStack(itemstack1, 1, 2, false))
                     {
